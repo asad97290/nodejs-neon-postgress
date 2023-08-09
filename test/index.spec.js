@@ -10,43 +10,46 @@ chai.use(chaiHttp);
 const setup = (...userObjects) => {
     return BlueBird.mapSeries(userObjects, user => {
         return chai.request(server)
-            .post('/trades')
-            .send(user)
-            .then(response => {
+        .post('/trades')
+        .send(user)
+        .then(response => {
                 return response.body;
             })
-    })
-}
-
-describe('stock_trades_api_easy_sequelize', () => {
-    const user23ABX = {
-        "type": "buy",
-        "user_id": 23,
-        "symbol": "ABX",
-        "shares": 30,
-        "price": 134,
-        "timestamp": 1591522701000
+        })
     }
-
-    const user23AAC = {
-        "type": "buy",
-        "user_id": 23,
-        "symbol": "AAC",
-        "shares": 12,
-        "price": 133,
-        "timestamp": 1591572701000
-    };
-
-    beforeEach(async () => {
-        await Trades.sync();
-    })
-
-    afterEach(async () => {
-        await Trades.drop();
-    })
-
-    it('should create a new trade', async () => {
+    
+    describe('stock_trades_api_easy_sequelize', () => {
+        const user23ABX = {
+            "type": "buy",
+            "user_id": 23,
+            "symbol": "ABX",
+            "shares": 30,
+            "price": 134,
+            "timestamp": 1591522701000
+        }
+        
+        const user23AAC = {
+            "type": "buy",
+            "user_id": 23,
+            "symbol": "AAC",
+            "shares": 12,
+            "price": 133,
+            "timestamp": 1591572701000
+        };
+        
+        // beforeEach(async (done) => {
+            //     await Trades.sync();
+            //     done()
+            // })
+            
+            // afterEach(async (done) => {
+                //     await Trades.drop();
+                //     done()
+                // })
+                
+    it.only('should create a new trade', async (done) => {
         const response1 = await chai.request(server).post('/trades').send(user23ABX)
+        console.log("--------->")
         response1.should.have.status(201);
         delete response1.body.id;
         response1.body.should.eql(user23ABX)
@@ -54,6 +57,7 @@ describe('stock_trades_api_easy_sequelize', () => {
         response2.should.have.status(201);
         delete response2.body.id;
         response2.body.should.eql(user23AAC)
+        done()
     });
 
     it('should fetch all the trades', async () => {

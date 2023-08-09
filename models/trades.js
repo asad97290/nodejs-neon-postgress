@@ -1,18 +1,18 @@
-const {Sequelize, DataTypes} = require("sequelize");
-const sequelize = new Sequelize("sqlite::memory:");
+const {DataTypes} = require("sequelize");
+const sequelize =  require('../db');
 
-const Trade = sequelize.define("trade", {
+const Trade = sequelize.define("trades", {
     type: DataTypes.TEXT,
-    user_id: DataTypes.NUMBER,
+    user_id: DataTypes.INTEGER,
     symbol: DataTypes.TEXT,
-    shares: DataTypes.NUMBER,
-    price: DataTypes.NUMBER,
+    shares: DataTypes.DECIMAL,
+    price: DataTypes.DECIMAL,
     timestamp: DataTypes.BIGINT,
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     }
-}, {timestamps : false});
+}, {timestamps : true});
 
 module.exports = Trade;

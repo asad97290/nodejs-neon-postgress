@@ -1,6 +1,6 @@
-const {Sequelize} = require("sequelize");
-const sequelize = new Sequelize("sqlite::memory:");
 const Trades = require('./models/trades');
+const sequelize =  require('./db');
+
 
 return sequelize.authenticate()
     .then(result => {
