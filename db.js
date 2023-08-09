@@ -1,6 +1,6 @@
 const {Sequelize, DataTypes} = require("sequelize");
-
-const sequelize = new Sequelize("postgres://aukhan:BO6IUbvEr5Np@ep-cool-band-245614.us-east-2.aws.neon.tech/tradesDb", {dialect: 'postgres',
+require("dotenv").config()
+const sequelize = new Sequelize(process.env.DB_URL, {dialect: 'postgres',
 protocol: 'postgres',
 dialectOptions: {
   ssl: {
